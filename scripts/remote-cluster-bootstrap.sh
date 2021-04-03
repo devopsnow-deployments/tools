@@ -1,1 +1,1 @@
-echo "Bootstrap your remote cluster with DevOpsNow $arg1"
+echo "Bootstrap your remote cluster with DevOpsNow $name"

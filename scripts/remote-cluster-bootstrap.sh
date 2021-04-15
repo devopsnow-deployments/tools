@@ -78,7 +78,7 @@ fi
 echo ""
 echo "Installing the bootstrap components to the namespace $namespace ..."
 helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace remote-bootstrap \
-  --repo raw.githubusercontent.com/devops-machine/charts/main \
+  --repo https://raw.githubusercontent.com/devops-machine/charts/main \
   --username $devopsnow_repo_username \
   --password $devopsnow_repo_password \
   --set devopsnow.repo.username=$devopsnow_repo_username \

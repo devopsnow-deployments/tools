@@ -42,8 +42,8 @@ if [[ -n $cluster_name ]] \
     && [[ -n $namespace ]] \
     && [[ -n $devopsnow_repo_username ]] \
     && [[ -n $devopsnow_repo_password ]] \
-    && [[ -n $devopsnow_application_sourceRepoURL ]] \
-    && [[ -n $devopsnow_application_sourceRepoPath ]];
+    && [[ -n $devopsnow_application_sourceRepoURL ]];
+#    && [[ -n $devopsnow_application_sourceRepoPath ]] \
 #     && [[ -n $devopsnow_registry_username ]] \
 #     && [[ -n $devopsnow_registry_password ]];
 then
@@ -55,7 +55,6 @@ else
     echo "  devopsnow_repo_username"
     echo "  devopsnow_repo_password"
     echo "  devopsnow_application_sourceRepoURL"
-    echo "  devopsnow_application_sourceRepoPath"
 #     echo "  devopsnow_registry_username"
 #     echo "  devopsnow_registry_password"
     exit 1

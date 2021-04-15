@@ -77,11 +77,11 @@ fi
 
 echo ""
 echo "Installing the bootstrap components to the namespace $namespace ..."
-helm install remote-bootstrap-now -n $namespace --create-namespace ~/git/charts/src/remote-bootstrap/ \
+helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace ~/git/charts/src/remote-bootstrap/ \
   --set devopsnow.repo.username=$devopsnow_repo_username \
-  --set devopsnow.repo.password=$devopsnow_repo_username \
-  --set devopsnow.application.sourceRepoURL=devopsnow_application_sourceRepoURL \
-  --set devopsnow.application.sourceRepoPath=devopsnow_application_sourceRepoPath
+  --set devopsnow.repo.password=$devopsnow_repo_password \
+  --set devopsnow.application.sourceRepoURL=$devopsnow_application_sourceRepoURL \
+  --set devopsnow.application.sourceRepoPath=$devopsnow_application_sourceRepoPath
 
 echo ""
 echo "Waiting for sealed-secrets component to create the key pair ..."

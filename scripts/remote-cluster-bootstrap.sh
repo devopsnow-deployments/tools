@@ -58,6 +58,7 @@ else
     echo "  devopsnow_application_sourceRepoPath"
 #     echo "  devopsnow_registry_username"
 #     echo "  devopsnow_registry_password"
+    exit 1
 fi
 
 # Validate if kubectl and helm are available

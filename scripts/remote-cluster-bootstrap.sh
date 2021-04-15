@@ -43,7 +43,7 @@ if [[ -n $cluster_name ]] \
     && [[ -n $devopsnow_repo_username ]] \
     && [[ -n $devopsnow_repo_password ]] \
     && [[ -n $devopsnow_application_sourceRepoURL ]] \
-    && [[ -n $devopsnow_application_sourceRepoPath ]] \
+    && [[ -n $devopsnow_application_sourceRepoPath ]];
 #     && [[ -n $devopsnow_registry_username ]] \
 #     && [[ -n $devopsnow_registry_password ]];
 then

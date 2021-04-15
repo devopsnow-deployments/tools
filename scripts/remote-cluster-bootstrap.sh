@@ -25,15 +25,15 @@ done
 # Setup some derived variables
 devopsnow_application_sourceRepoPath="remote/$cluster_name/apps"
 
-# Testing
-echo "cluster_name = $cluster_name"
-echo "namespace = $namespace"
-echo "devopsnow_repo_username = $devopsnow_repo_username"
-echo "devopsnow_repo_password = $devopsnow_repo_password"
-echo "devopsnow_application_sourceRepoURL = $devopsnow_application_sourceRepoURL"
-echo "devopsnow_application_sourceRepoPath = $devopsnow_application_sourceRepoPath"
-echo "devopsnow_registry_username = $devopsnow_registry_username"
-echo "devopsnow_registry_password = $devopsnow_registry_password"
+# # Testing
+# echo "cluster_name = $cluster_name"
+# echo "namespace = $namespace"
+# echo "devopsnow_repo_username = $devopsnow_repo_username"
+# echo "devopsnow_repo_password = $devopsnow_repo_password"
+# echo "devopsnow_application_sourceRepoURL = $devopsnow_application_sourceRepoURL"
+# echo "devopsnow_application_sourceRepoPath = $devopsnow_application_sourceRepoPath"
+# echo "devopsnow_registry_username = $devopsnow_registry_username"
+# echo "devopsnow_registry_password = $devopsnow_registry_password"
 
 # Validate that all required inputs are provided
 echo ""

@@ -11,9 +11,7 @@ main() {
     ensure_argo_cli_tool "$@"
     argo_login $argo_url $argo_username $argo_password
     argo_git_repo_add $GIT_REPO $git_repo_username $git_repo_password
-    if [ ! -z "$stack_name" ]; then
-        argo_create_project $stack_name
-    fi
+    argo_create_project $customer_name
     argo_create_customer_app $customer_name $GIT_REPO $GIT_REV $GIT_PATH
 
     exit 0
@@ -29,10 +27,13 @@ step_print() {
 
 argo_login() {
     step_print "Attempting to switch Argo context to $1"
-    echo "argocd login $1 --username $2 --password $3"
-    if [ $? -ne 0 ]; then
-        echo "Unable to argo login successfully."
-        exit 1
+    echo "argocd login $1 --username $2 --password $3 --grpc-web"
+    if [ "$dry" = "false" ]; then
+        argocd login "$1" --username $2 --password $3 --grpc-web
+        if [ $? -ne 0 ]; then
+            echo "Unable to argo login successfully."
+            exit 1
+        fi
     fi
 }
 
@@ -42,24 +43,28 @@ argo_git_repo_add() {
     local git_pass=$3
 
     step_print "Adding git repo $git_repo to Argo"
-    echo "argocd repo add $git_repo --username $git_pass --password $git_pass"
-    if [ $? -ne 0 ]; then
-        echo "Unable to add git repo to argo successfully."
-        exit 1
+    echo "argocd repo add $git_repo --username $git_user --password $git_pass"
+    if [ "$dry" = "false" ]; then
+        argocd repo add $git_repo --username $git_user --password $git_pass
+        if [ $? -ne 0 ]; then
+            echo "Unable to add git repo to argo successfully."
+            exit 1
+        fi
     fi
 }
 
 argo_create_project() {
-    local stack_name=$1
+    local customer_name=$1
 
-    step_print "Creating Argo project $stack_name"
+    step_print "Creating Argo project $customer_name"
 
-    echo "Found a stack name ($stack_name), used to deploy Argo apps to non-default projects..."
-    echo "  creating that project."
-    echo "argocd proj create $stack_name --dest \"*,*\" --src \"*\""
-    if [ $? -ne 0 ]; then
-        echo "Unable to create argo project successfully."
-        exit 1
+    echo "argocd proj create $customer_name --dest \"*,*\" --src \"*\" --upsert"
+    if [ "$dry" = "false" ]; then
+        argocd proj create $customer_name --dest "*,*" --src "*" --upsert
+        if [ $? -ne 0 ]; then
+            echo "Unable to create argo project successfully."
+            exit 1
+        fi
     fi
 }
 
@@ -69,12 +74,15 @@ argo_create_customer_app() {
     local git_rev=$3
     local git_path=$4
 
-    step_print "Creating Argo app devopsnow-remote-${customer_name}-apps"
+    step_print "Creating Argo app devopsnow-${customer_name}-apps"
 
-    echo "argocd app create devopsnow-remote-${customer_name}-apps --repo $git_repo --path $git_path --revision $git_rev --dest-server https://kubernetes.default.svc --directory-recurse" 
-    if [ $? -ne 0 ]; then
-        echo "Unable to add argo app successfully."
-        exit 1
+    echo "argocd app create devopsnow-${customer_name}-apps --project ${customer_name} --repo $git_repo --path $git_path --revision $git_rev --dest-server https://kubernetes.default.svc --directory-recurse" 
+    if [ "$dry" = "false" ]; then
+        argocd app create devopsnow-${customer_name}-apps --project ${customer_name} --repo $git_repo --path $git_path --revision $git_rev --dest-server https://kubernetes.default.svc --directory-recurse 
+        if [ $? -ne 0 ]; then
+            echo "Unable to add argo app successfully."
+            exit 1
+        fi
     fi
 }
 
@@ -112,7 +120,7 @@ validate_cli_inputs_instantiate_vars() {
                 cluster_provider)     cluster_provider=${VALUE} ;;
                 cluster_region)       cluster_region=${VALUE} ;;
                 customer_name)        customer_name=${VALUE} ;;
-                stack_name)           stack_name=${VALUE} ;;
+                dry)                  dry=${VALUE} ;;
                 argo_url)             argo_url=${VALUE} ;;
                 argo_username)        argo_username=${VALUE} ;;
                 argo_password)        argo_password=${VALUE} ;;

@@ -9,6 +9,9 @@ do
 
     case "$KEY" in
             cluster_name)              cluster_name=${VALUE} ;;
+            cluster_type)              cluster_type=${VALUE} ;;
+            cluster_provider)          cluster_provider=${VALUE} ;;
+            cluster_region)            cluster_region=${VALUE} ;;
             namespace)    namespace=${VALUE} ;;   
             devopsnow_repo_username)    devopsnow_repo_username=${VALUE} ;;
             devopsnow_repo_password)    devopsnow_repo_password=${VALUE} ;;
@@ -23,7 +26,7 @@ done
 # print  help if needed
 
 # Setup some derived variables
-devopsnow_application_sourceRepoPath="remote/$cluster_name/apps"
+devopsnow_application_sourceRepoPath="$cluster_type/$cluster_provider/$cluster_region/$cluster_name/apps"
 
 # # Testing
 # echo "cluster_name = $cluster_name"
@@ -39,6 +42,9 @@ devopsnow_application_sourceRepoPath="remote/$cluster_name/apps"
 echo ""
 echo "Validating input arguments ..."
 if [[ -n $cluster_name ]] \
+    && [[ -n $cluster_type ]] \
+    && [[ -n $cluster_provider ]] \
+    && [[ -n $cluster_region ]] \
     && [[ -n $namespace ]] \
     && [[ -n $devopsnow_repo_username ]] \
     && [[ -n $devopsnow_repo_password ]] \
@@ -51,6 +57,9 @@ then
 else
     echo "Not all required arguments are present. The following arguments are required: "
     echo "  cluster_name"
+    echo "  cluster_type"
+    echo "  cluster_provider"
+    echo "  cluster_region"
     echo "  namespace"
     echo "  devopsnow_repo_username"
     echo "  devopsnow_repo_password"
@@ -85,6 +94,9 @@ helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace rem
   --set devopsnow.repo.password=$devopsnow_repo_password \
   --set devopsnow.application.sourceRepoURL=$devopsnow_application_sourceRepoURL \
   --set devopsnow.application.sourceRepoPath=$devopsnow_application_sourceRepoPath
+
+# If repo is common, can also:
+#   --set devopsnow.application.name=devopsnow-common-applications
 
 echo ""
 echo "Waiting for sealed-secrets component to create the key pair ..."

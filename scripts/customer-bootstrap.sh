@@ -27,7 +27,7 @@ step_print() {
 
 argo_login() {
     step_print "Attempting to switch Argo context to $1"
-    echo "argocd login $1 --username $2 --password $3 --grpc-web"
+    echo "argocd login $1 --username $2 --password $3 --grpc-web --insecure"
     if [ "$dry" = "false" ]; then
         argocd login "$1" --username $2 --password $3 --grpc-web
         if [ $? -ne 0 ]; then

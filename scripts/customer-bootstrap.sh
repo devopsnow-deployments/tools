@@ -76,9 +76,9 @@ argo_create_customer_app() {
 
     step_print "Creating Argo app devopsnow-${customer_name}-apps"
 
-    echo "argocd app create devopsnow-${customer_name}-apps --project ${customer_name} --repo $git_repo --path $git_path --revision $git_rev --dest-server https://kubernetes.default.svc --directory-recurse" 
+    echo "argocd app create devopsnow-${customer_name}-apps --project ${customer_name} --repo $git_repo --path $git_path --revision $git_rev --dest-server https://kubernetes.default.svc --directory-recurse --sync-policy automated" 
     if [ "$dry" = "false" ]; then
-        argocd app create devopsnow-${customer_name}-apps --project ${customer_name} --repo $git_repo --path $git_path --revision $git_rev --dest-server https://kubernetes.default.svc --directory-recurse 
+        argocd app create devopsnow-${customer_name}-apps --project ${customer_name} --repo $git_repo --path $git_path --revision $git_rev --dest-server https://kubernetes.default.svc --directory-recurse --sync-policy automated
         if [ $? -ne 0 ]; then
             echo "Unable to add argo app successfully."
             exit 1

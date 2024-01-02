@@ -90,6 +90,6 @@ echo ""
 echo "Waiting for sealed-secrets component to create the key pair ..."
 sleep 60
 
-echo "Please send the following public key (base64 encoded) back to DevOpsNow ..."
+echo "Please send the following public key (base64 encoded) back to OpsVerse..."
 echo ""
 echo `kubectl get secret -n ${namespace} -l 'sealedsecrets.bitnami.com/sealed-secrets-key=active' -o jsonpath='{.items[].data.tls\.crt}'`

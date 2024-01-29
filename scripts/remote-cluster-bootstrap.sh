@@ -23,7 +23,7 @@ done
 # print  help if needed
 
 # Setup some derived variables
-opsverse_application_sourceRepoPath="remote/$cluster_name/apps"
+opsverse_application_sourceRepoPath="$cluster_type/$cluster_provider/$cluster_region/$cluster_name/apps"
 
 # # Testing
 # echo "cluster_name = $cluster_name"
@@ -39,6 +39,9 @@ opsverse_application_sourceRepoPath="remote/$cluster_name/apps"
 echo ""
 echo "Validating input arguments ..."
 if [[ -n $cluster_name ]] \
+    && [[ -n $cluster_type ]] \
+    && [[ -n $cluster_provider ]] \
+    && [[ -n $cluster_region ]] \
     && [[ -n $namespace ]] \
     && [[ -n $opsverse_repo_username ]] \
     && [[ -n $opsverse_repo_password ]] \
@@ -51,6 +54,9 @@ then
 else
     echo "Not all required arguments are present. The following arguments are required: "
     echo "  cluster_name"
+    echo "  cluster_type"
+    echo "  cluster_provider"
+    echo "  cluster_region"
     echo "  namespace"
     echo "  opsverse_repo_username"
     echo "  opsverse_repo_password"

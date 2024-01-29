@@ -10,11 +10,11 @@ do
     case "$KEY" in
             cluster_name)              cluster_name=${VALUE} ;;
             namespace)    namespace=${VALUE} ;;   
-            devopsnow_repo_username)    devopsnow_repo_username=${VALUE} ;;
-            devopsnow_repo_password)    devopsnow_repo_password=${VALUE} ;;
-            devopsnow_application_sourceRepoURL)    devopsnow_application_sourceRepoURL=${VALUE} ;;
-#             devopsnow_registry_username)    devopsnow_registry_username=${VALUE} ;;
-#             devopsnow_registry_password)    devopsnow_registry_password=${VALUE} ;;
+            opsverse_repo_username)    opsverse_repo_username=${VALUE} ;;
+            opsverse_repo_password)    opsverse_repo_password=${VALUE} ;;
+            opsverse_application_sourceRepoURL)    opsverse_application_sourceRepoURL=${VALUE} ;;
+#             opsverse_registry_username)    opsverse_registry_username=${VALUE} ;;
+#             opsverse_registry_password)    opsverse_registry_password=${VALUE} ;;
             *)   
     esac    
 done
@@ -23,40 +23,40 @@ done
 # print  help if needed
 
 # Setup some derived variables
-devopsnow_application_sourceRepoPath="remote/$cluster_name/apps"
+opsverse_application_sourceRepoPath="remote/$cluster_name/apps"
 
 # # Testing
 # echo "cluster_name = $cluster_name"
 # echo "namespace = $namespace"
-# echo "devopsnow_repo_username = $devopsnow_repo_username"
-# echo "devopsnow_repo_password = $devopsnow_repo_password"
-# echo "devopsnow_application_sourceRepoURL = $devopsnow_application_sourceRepoURL"
-# echo "devopsnow_application_sourceRepoPath = $devopsnow_application_sourceRepoPath"
-# echo "devopsnow_registry_username = $devopsnow_registry_username"
-# echo "devopsnow_registry_password = $devopsnow_registry_password"
+# echo "opsverse_repo_username = $opsverse_repo_username"
+# echo "opsverse_repo_password = $opsverse_repo_password"
+# echo "opsverse_application_sourceRepoURL = $opsverse_application_sourceRepoURL"
+# echo "opsverse_application_sourceRepoPath = $opsverse_application_sourceRepoPath"
+# echo "opsverse_registry_username = $opsverse_registry_username"
+# echo "opsverse_registry_password = $opsverse_registry_password"
 
 # Validate that all required inputs are provided
 echo ""
 echo "Validating input arguments ..."
 if [[ -n $cluster_name ]] \
     && [[ -n $namespace ]] \
-    && [[ -n $devopsnow_repo_username ]] \
-    && [[ -n $devopsnow_repo_password ]] \
-    && [[ -n $devopsnow_application_sourceRepoURL ]];
-#    && [[ -n $devopsnow_application_sourceRepoPath ]] \
-#     && [[ -n $devopsnow_registry_username ]] \
-#     && [[ -n $devopsnow_registry_password ]];
+    && [[ -n $opsverse_repo_username ]] \
+    && [[ -n $opsverse_repo_password ]] \
+    && [[ -n $opsverse_application_sourceRepoURL ]];
+#    && [[ -n $opsverse_application_sourceRepoPath ]] \
+#     && [[ -n $opsverse_registry_username ]] \
+#     && [[ -n $opsverse_registry_password ]];
 then
     echo "All required arguments are present. Continuing ..."
 else
     echo "Not all required arguments are present. The following arguments are required: "
     echo "  cluster_name"
     echo "  namespace"
-    echo "  devopsnow_repo_username"
-    echo "  devopsnow_repo_password"
-    echo "  devopsnow_application_sourceRepoURL"
-#     echo "  devopsnow_registry_username"
-#     echo "  devopsnow_registry_password"
+    echo "  opsverse_repo_username"
+    echo "  opsverse_repo_password"
+    echo "  opsverse_application_sourceRepoURL"
+#     echo "  opsverse_registry_username"
+#     echo "  opsverse_registry_password"
     exit 1
 fi
 
@@ -78,13 +78,13 @@ fi
 echo ""
 echo "Installing the bootstrap components to the namespace $namespace ..."
 helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace remote-bootstrap \
-  --repo https://raw.githubusercontent.com/devops-machine/charts/main \
-  --username $devopsnow_repo_username \
-  --password $devopsnow_repo_password \
-  --set devopsnow.repo.username=$devopsnow_repo_username \
-  --set devopsnow.repo.password=$devopsnow_repo_password \
-  --set devopsnow.application.sourceRepoURL=$devopsnow_application_sourceRepoURL \
-  --set devopsnow.application.sourceRepoPath=$devopsnow_application_sourceRepoPath
+  --repo https://registry.devopsnow.io/chartrepo/internal \
+  --username $opsverse_repo_username \
+  --password $opsverse_repo_password \
+  --set devopsnow.repo.username=$opsverse_repo_username \
+  --set devopsnow.repo.password=$opsverse_repo_password \
+  --set devopsnow.application.sourceRepoURL=$opsverse_application_sourceRepoURL \
+  --set devopsnow.application.sourceRepoPath=$opsverse_application_sourceRepoPath
 
 echo ""
 echo "Waiting for sealed-secrets component to create the key pair ..."

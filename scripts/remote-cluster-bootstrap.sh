@@ -76,6 +76,8 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo ""
+echo "Installing ArgoCD CRD"
+kubectl apply -f https://raw.githubusercontent.com/devopsnow-deployments/tools/main/scripts/application-crd.yaml
 echo "Installing the bootstrap components to the namespace $namespace ..."
 helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace remote-bootstrap \
   --repo https://registry.devopsnow.io/chartrepo/internal \

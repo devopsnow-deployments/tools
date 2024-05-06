@@ -49,8 +49,9 @@ if [[ -n $cluster_name ]] \
     && [[ -n $opsverse_repo_username ]] \
     && [[ -n $opsverse_repo_password ]] \
     && [[ -n $opsverse_application_sourceRepoURL ]] \
-    && [[ -n $opsverse_registry_username ]] \
-    && [[ -n $opsverse_registry_password ]];
+    && [[ -n $chart_registry_username ]] \
+    && [[ -n $chart_registry_password ]] \
+    && [[ -n $chart_registry_hostname ]];
     #    && [[ -n $opsverse_application_sourceRepoPath ]] \
 then
     echo "All required arguments are present. Continuing ..."
@@ -64,8 +65,9 @@ else
     echo "  opsverse_repo_username"
     echo "  opsverse_repo_password"
     echo "  opsverse_application_sourceRepoURL"
-    echo "  opsverse_registry_username"
-    echo "  opsverse_registry_password"
+    echo "  chart_registry_hostname"
+    echo "  chart_registry_username"
+    echo "  chart_registry_password"
     exit 1
 fi
 
@@ -88,10 +90,10 @@ echo ""
 echo "Installing ArgoCD CRD"
 kubectl apply -f https://raw.githubusercontent.com/devopsnow-deployments/tools/main/scripts/application-crd.yaml
 echo "Installing the bootstrap components to the namespace $namespace ..."
-helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace remote-bootstrap \
-  --repo https://registry.devopsnow.io/chartrepo/internal \
-  --username $opsverse_registry_username \
-  --password $opsverse_registry_password \
+helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace remote-bootstrap -f ./values-override.yaml\
+  --repo $chart_registry_hostname \
+  --username $chart_registry_username \
+  --password $chart_registry_password \
   --set devopsnow.repo.username=$opsverse_repo_username \
   --set devopsnow.repo.password=$opsverse_repo_password \
   --set devopsnow.application.sourceRepoURL=$opsverse_application_sourceRepoURL \

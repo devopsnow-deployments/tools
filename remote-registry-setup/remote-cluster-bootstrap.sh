@@ -41,17 +41,6 @@ opsverse_application_sourceRepoPath="$cluster_type/$cluster_provider/$cluster_re
 
 # Validate that all required inputs are provided
 echo ""
-echo $cluster_name
-echo $namespace
-echo $cluster_type
-echo $cluster_provider
-echo $cluster_region
-echo $opsverse_repo_username
-echo $opsverse_repo_password
-echo $opsverse_application_sourceRepoURL
-echo $chart_registry_username
-echo $chart_registry_password
-echo $chart_registry_hostname
 echo "Validating input arguments ..."
 if [[ -n $cluster_name ]] \
     && [[ -n $namespace ]] \

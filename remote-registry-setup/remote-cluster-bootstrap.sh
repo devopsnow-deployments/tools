@@ -102,10 +102,8 @@ echo ""
 echo "Installing ArgoCD CRD"
 kubectl apply -f https://raw.githubusercontent.com/devopsnow-deployments/tools/main/scripts/application-crd.yaml
 echo "Installing the bootstrap components to the namespace $namespace ..."
-helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace remote-bootstrap -f ./values-override.yaml\
-  --repo $chart_registry_hostname \
-  --username $chart_registry_username \
-  --password $chart_registry_password \
+helm pull oci://$chart_registry_hostname/remote-bootstrap --version "0.1.8"
+helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace remote-bootstrap-0.1.8.tgz -f ./values-override.yaml \
   --set devopsnow.repo.username=$opsverse_repo_username \
   --set devopsnow.repo.password=$opsverse_repo_password \
   --set devopsnow.application.sourceRepoURL=$opsverse_application_sourceRepoURL \

@@ -41,6 +41,7 @@ opsverse_application_sourceRepoPath="$cluster_type/$cluster_provider/$cluster_re
 
 # Validate that all required inputs are provided
 echo ""
+echo $chart_registry_hostname
 echo "Validating input arguments ..."
 if [[ -n $cluster_name ]] \
     && [[ -n $namespace ]] \

@@ -16,6 +16,7 @@ do
             opsverse_repo_username)    opsverse_repo_username=${VALUE} ;;
             opsverse_repo_password)    opsverse_repo_password=${VALUE} ;;
             opsverse_application_sourceRepoURL)    opsverse_application_sourceRepoURL=${VALUE} ;;
+            chart_registry_hostname)       chart_registry_hostname=${VALUE} ;;
             opsverse_registry_username)    opsverse_registry_username=${VALUE} ;;
             opsverse_registry_password)    opsverse_registry_password=${VALUE} ;;
             *)   

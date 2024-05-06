@@ -17,8 +17,8 @@ do
             opsverse_repo_password)    opsverse_repo_password=${VALUE} ;;
             opsverse_application_sourceRepoURL)    opsverse_application_sourceRepoURL=${VALUE} ;;
             chart_registry_hostname)       chart_registry_hostname=${VALUE} ;;
-            chart_registry_username)    opsverse_registry_username=${VALUE} ;;
-            chart_registry_password)    opsverse_registry_password=${VALUE} ;;
+            chart_registry_username)    chart_registry_username=${VALUE} ;;
+            chart_registry_password)    chart_registry_password=${VALUE} ;;
             *)   
     esac    
 done

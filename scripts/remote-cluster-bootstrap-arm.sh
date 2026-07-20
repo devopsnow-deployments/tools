@@ -97,7 +97,8 @@ helm upgrade --install remote-bootstrap-now -n $namespace --create-namespace rem
   --set devopsnow.application.sourceRepoURL=$opsverse_application_sourceRepoURL \
   --set devopsnow.application.sourceRepoPath=$opsverse_application_sourceRepoPath \
   --set sealedsecrets.image.tag=v0.15.0-arm \
-  --set argo-cd.global.image.tag=v2.14.14-arm
+  --set argo-cd.global.image.tag=v2.14.14-arm \
+  --set argo-cd.redis.image.tag=7.0.13-alpine-arm
 
 echo ""
 echo "Waiting for sealed-secrets component to create the key pair ..."
